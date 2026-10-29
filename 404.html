@@ -5,16 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Validéo a déménagé</title>
-<meta http-equiv="refresh" content="0; url=https://valideo.netlify.app/">
 <script>
-  // Ancienne adresse GitHub Pages : on renvoie vers la même page sur Netlify, en gardant le lien complet
+  // Storyfil vit sur ce site (/storyboard/) : ses adresses ne partent jamais vers Validéo
+  var storyfil = /^\/storyboard(\/|$)/i.test(location.pathname);
   (function () {
+    if (storyfil) {
+      // Une sous-adresse inconnue revient à l'outil ; l'outil lui-même manquant affiche un message (pas de boucle)
+      if (!/^\/storyboard\/$/i.test(location.pathname)) location.replace('/storyboard/' + location.search + location.hash);
+      return;
+    }
+    // Ancienne adresse GitHub Pages de Validéo : on renvoie vers la même page sur Netlify, en gardant le lien complet
     var p = location.pathname.replace(/^\/valideo(?=\/|$)/i, '') || '/';
     if (p === '/beta.html') p = '/app.html';
     location.replace('https://valideo.netlify.app' + p + location.search + location.hash);
   })();
 </script>
-<style>body{font-family:system-ui,sans-serif;background:#070a12;color:#e8ecf4;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center}a{color:#22d3ee}</style>
+<style>body{font-family:system-ui,sans-serif;background:#070a12;color:#e8ecf4;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center;padding:0 20px}a{color:#22d3ee}</style>
 </head>
-<body><p>Validéo a une nouvelle adresse.<br><a href="https://valideo.netlify.app/">valideo.netlify.app</a></p></body>
+<body>
+<p id="msg">Validéo a une nouvelle adresse.<br><a href="https://valideo.netlify.app/">valideo.netlify.app</a></p>
+<script>
+  if (storyfil) { document.title = 'Storyfil'; document.getElementById('msg').textContent = 'Storyfil est en cours de publication : réessayez dans quelques minutes.'; }
+</script>
+</body>
 </html>
